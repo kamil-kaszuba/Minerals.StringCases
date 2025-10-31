@@ -1,5 +1,5 @@
-using System.Runtime.CompilerServices;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace Minerals.StringCases
 {
@@ -16,7 +16,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     newString[newIndex] = insertSeparator
@@ -26,7 +27,8 @@ namespace Minerals.StringCases
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToCamelCase(this string value)
@@ -41,7 +43,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     newString[newIndex] = insertSeparator && !isFirstCharacter
@@ -52,7 +55,8 @@ namespace Minerals.StringCases
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToUnderscoreCamelCase(this string value)
@@ -68,7 +72,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     newString[newIndex] = insertSeparator && !isFirstCharacter
@@ -79,7 +84,8 @@ namespace Minerals.StringCases
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToKebabCase(this string value)
@@ -94,7 +100,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     if (insertSeparator && !isFirstCharacter)
@@ -102,13 +109,15 @@ namespace Minerals.StringCases
                         newString[newIndex] = '-';
                         newIndex++;
                     }
+
                     newString[newIndex] = char.ToLowerInvariant(value[i]);
                     isFirstCharacter = false;
                     insertSeparator = false;
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToSnakeCase(this string value)
@@ -123,7 +132,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     if (insertSeparator && !isFirstCharacter)
@@ -131,13 +141,15 @@ namespace Minerals.StringCases
                         newString[newIndex] = '_';
                         newIndex++;
                     }
+
                     newString[newIndex] = char.ToLowerInvariant(value[i]);
                     isFirstCharacter = false;
                     insertSeparator = false;
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToMacroCase(this string value)
@@ -152,7 +164,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     if (insertSeparator && !isFirstCharacter)
@@ -160,13 +173,15 @@ namespace Minerals.StringCases
                         newString[newIndex] = '_';
                         newIndex++;
                     }
+
                     newString[newIndex] = char.ToUpperInvariant(value[i]);
                     isFirstCharacter = false;
                     insertSeparator = false;
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToTrainCase(this string value)
@@ -181,7 +196,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     if (insertSeparator && !isFirstCharacter)
@@ -189,6 +205,7 @@ namespace Minerals.StringCases
                         newString[newIndex] = '-';
                         newIndex++;
                     }
+
                     newString[newIndex] = insertSeparator
                         ? char.ToUpperInvariant(value[i])
                         : char.ToLowerInvariant(value[i]);
@@ -197,7 +214,8 @@ namespace Minerals.StringCases
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         public static string ToTitleCase(this string value)
@@ -212,7 +230,8 @@ namespace Minerals.StringCases
             {
                 previous = current;
                 current = char.GetUnicodeCategory(value[i]);
-                insertSeparator = (previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber)) || insertSeparator;
+                insertSeparator = (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) || insertSeparator;
                 if (!IsSpecialCharacter(current))
                 {
                     if (insertSeparator && !isFirstCharacter)
@@ -220,6 +239,7 @@ namespace Minerals.StringCases
                         newString[newIndex] = ' ';
                         newIndex++;
                     }
+
                     newString[newIndex] = insertSeparator
                         ? char.ToUpperInvariant(value[i])
                         : char.ToLowerInvariant(value[i]);
@@ -228,7 +248,8 @@ namespace Minerals.StringCases
                     newIndex++;
                 }
             }
-            return new(newString);
+
+            return new string(newString, 0, newIndex);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -242,7 +263,8 @@ namespace Minerals.StringCases
             {
                 current = char.GetUnicodeCategory(text[i]);
                 skips += IsSpecialCharacter(current) ? 1 : 0;
-                divs += previous != current && (current is UnicodeCategory.UppercaseLetter || current is UnicodeCategory.DecimalDigitNumber) ? 1 : 0;
+                divs += (previous != current && current is UnicodeCategory.UppercaseLetter or UnicodeCategory.DecimalDigitNumber) ||
+                    (IsSpecialCharacter(previous) && !IsSpecialCharacter(current)) ? 1 : 0;
                 previous = current;
             }
             return divs - skips;
@@ -262,11 +284,10 @@ namespace Minerals.StringCases
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsSpecialCharacter(UnicodeCategory category)
-        {
-            return category is not UnicodeCategory.UppercaseLetter
+        private static bool IsSpecialCharacter(UnicodeCategory category) =>
+            category is not UnicodeCategory.UppercaseLetter
                 and not UnicodeCategory.LowercaseLetter
-                and not UnicodeCategory.DecimalDigitNumber;
-        }
+                and not UnicodeCategory.DecimalDigitNumber
+                and not UnicodeCategory.OtherPunctuation;
     }
 }
